@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name":"Ñahui",
+    "description":"An extension to simulate automatic click when a youtube ad is skippable",
+    "version":"1",
+    "author":"Alejandro Mendoza",
+    "content_scripts" : [
+		{
+			"matches" : [
+				"<all_urls>"
+                 ],
+                  "js" : ["content.js"]
+        }
+    ],
+    "background" : {
+                  "scripts" : ["background.js"],
+                  "persistent": false
+    },
+    "icons": { "16": "tab-icon.png",
+        "48": "tab-icon.png",
+       "128": "tab-icon.png" },
+    "permissions": [
+        "activeTab"
+      ]
+}
