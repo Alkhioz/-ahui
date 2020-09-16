@@ -7,7 +7,8 @@
     "content_scripts" : [
 		{
 			"matches" : [
-				"<all_urls>"
+                "*://*.youtube.com/*",
+                "*://*.dev.aledeveloper.com/*"
                  ],
                   "js" : ["content.js"]
         }
@@ -16,10 +17,9 @@
                   "scripts" : ["background.js"],
                   "persistent": false
     },
+    "browser_action" : {
+    },
     "icons": { "16": "tab-icon.png",
         "48": "tab-icon.png",
-       "128": "tab-icon.png" },
-    "permissions": [
-        "activeTab"
-      ]
+       "128": "tab-icon.png" }
 }
