@@ -1,5 +1,5 @@
-const targetNode = document.querySelector('#ytd-player');
-console.log(targetNode);
+const targetNode = document.querySelector('#movie_player');
+
 const config = { childList: true, subtree: true };
 const callback = (mutationsList, observer) => {
     chrome.storage.local.get(null, function(result) {
