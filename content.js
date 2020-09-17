@@ -29,18 +29,30 @@ var observeDOM = (function(){
             el.dispatchEvent(evObj);
         }
     }
-    observed_element = document.querySelector('body');
-    
-    observeDOM( observed_element, function(m){
+  
 
-      if(!!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]){
-        var adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
-        setTimeout(()=>{
-          eventFire(adbutton, 'click');
-        }, 5000);
-        //console.log(document.getElementsByClassName("ytp-ad-skip-button ytp-button"));
-      }
-      
-     // console.log('DOM change');
-      });
-console.log('funciona aqui');
+      observed_element = document.querySelector('body');
+     
+      observeDOM( observed_element, function(){
+
+            chrome.storage.local.get( null , function (result) {
+                if(result.status === 'on'){
+                  if(!!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]){
+                    var adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
+                    if(result.mode === 'normal'){
+                      setTimeout(()=>{
+                        eventFire(adbutton, 'click');
+                      }, 5000); 
+                    }else{
+                      eventFire(adbutton, 'click');
+                    }
+                    
+                  }
+                }
+              });
+              
+            
+        });
+       console.log('funciona aqui');
+   // }
+    

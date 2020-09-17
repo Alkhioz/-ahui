@@ -1,4 +1,9 @@
 console.log("Background running");
+chrome.runtime.onInstalled.addListener( () => {
+  chrome.browserAction.setBadgeText({text: 'ON'});
+  chrome.browserAction.setBadgeBackgroundColor({color: '#4688F1'});
+  chrome.storage.local.set({'status': 'on', 'mode':'normal'});
+});
 
 function executeScriptsInExistingTabs(){
     chrome.windows.getAll(null, function(wins) {
