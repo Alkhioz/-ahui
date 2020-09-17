@@ -33,13 +33,12 @@ var observeDOM = (function(){
     
     observeDOM( observed_element, function(m){
 
-      if(!!document.getElementById("skip-button:z")){
-        var container = document.getElementById("skip-button:z");
-        var adbutton = container.getElementsByTagName("BUTTON")[0];
+      if(!!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]){
+        var adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
         eventFire(adbutton, 'click');
-        console.log('you did it');
-        
+        //console.log(document.getElementsByClassName("ytp-ad-skip-button ytp-button"));
       }
-      console.log('DOM change');
+      
+     // console.log('DOM change');
       });
 console.log('funciona aqui');
