@@ -1,29 +1,33 @@
 {
     "manifest_version": 2,
-    "name":"Amsa",
-    "description":"Autoskip youtube ads",
-    "version":"1",
-    "author":"Alejandro Mendoza",
-    "content_scripts" : [
-		{
-			"matches" : [
-                "*://*.youtube.com/*",
-                "*://*.dev.aledeveloper.com/*"
-                 ],
-                  "js" : ["content.js"]
-        }
-    ],
-    "background" : {
-                  "scripts" : ["background.js"],
-                  "persistent": false
+    "name": "Amsa",
+    "description": "Autoskip youtube ads",
+    "version": "1",
+    "author": "Alejandro Mendoza",
+    "content_scripts": [{
+        "matches": [
+            "*://*.youtube.com/*",
+            "*://*.dev.aledeveloper.com/*"
+        ],
+        "js": [
+            "content.js"
+        ]
+    }],
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
     },
-      "browser_action": {
+    "browser_action": {
         "default_popup": "popup.html"
-      },
-    "icons": { "16": "tab-icon.png",
+    },
+    "icons": {
+        "16": "tab-icon.png",
         "48": "tab-icon.png",
-       "128": "tab-icon.png" },
+        "128": "tab-icon.png"
+    },
     "permissions": [
         "storage"
-      ]
+    ]
 }

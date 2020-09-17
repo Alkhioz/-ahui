@@ -1,8 +1,9 @@
-body{
+body {
     padding: 5px;
     background-color: rgb(32, 29, 29);
 }
-.button{
+
+.button {
     display: block;
     width: 100px;
     text-align: center;
@@ -10,15 +11,18 @@ body{
     margin: 4px;
     padding: 4px;
 }
-.enable{
+
+.enable {
     background-color: rgb(10, 10, 10);
     color: rgb(255, 255, 255);
     border-right: 10px rgb(40, 40, 122) solid;
 }
-.disable{
+
+.disable {
     background-color: rgba(10, 10, 10, 0.479);
     color: rgb(255, 255, 255, 0.479);
 }
-.header{
+
+.header {
     text-align: center;
 }
