@@ -35,7 +35,9 @@ var observeDOM = (function(){
 
       if(!!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]){
         var adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
-        setTimeout(eventFire(adbutton, 'click'), 5000);
+        setTimeout(()=>{
+          eventFire(adbutton, 'click');
+        }, 5000);
         //console.log(document.getElementsByClassName("ytp-ad-skip-button ytp-button"));
       }
       

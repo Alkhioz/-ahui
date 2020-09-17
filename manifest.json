@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name":"Ñahui",
-    "description":"An extension to simulate automatic click when a youtube ad is skippable",
+    "name":"Amsa",
+    "description":"Autoskip youtube ads",
     "version":"1",
     "author":"Alejandro Mendoza",
     "content_scripts" : [
