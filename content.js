@@ -48,11 +48,13 @@ var observeDOM = (function(){
                     }
                     
                   }
+                console.log('on');
+                }else{
+                  console.log('off');
                 }
               });
               
             
         });
-       console.log('funciona aqui');
-   // }
+console.log('funciona aqui');
     
