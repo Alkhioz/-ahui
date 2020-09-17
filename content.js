@@ -1,60 +1,64 @@
-var observeDOM = (function(){
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+//const targetNode = document.querySelector('body');
+const targetNode = document.querySelector('#ytd-player');
+console.log(targetNode);
+const config = {childList: true, subtree : true};
+const callback = (mutationsList, observer) => {
+  chrome.storage.local.get( null , function (result) {
+    if(result.status === 'off') return;
+    if(!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]) return;
+    let adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
+    check_mode(result.mode, adbutton);
+  });
+};
   
-    return function( obj, callback ){
-      if( !obj || obj.nodeType !== 1 ) return; // validation
-  
-      if( MutationObserver ){
-        // define a new observer
-        var obs = new MutationObserver(function(mutations, observer){
-            callback(mutations);
-        })
-        // have the observer observe foo for changes in children
-        obs.observe( obj, { childList:true, subtree:true });
-      }
-      
-      else if( window.addEventListener ){
-        obj.addEventListener('DOMNodeInserted', callback, false);
-        obj.addEventListener('DOMNodeRemoved', callback, false);
-      }
+  const observer = new MutationObserver(callback);
+
+  check_mode = (mode, object) =>{
+    if(mode === 'normal'){
+      setTimeout(()=>{
+        eventFire(object, 'click');
+      }, 5000);
+      return 0;
     }
-  })();
+    eventFire(object, 'click');
+  } 
+
+  atach_event = (el, etype) =>{
+      let evObj = document.createEvent('Events');
+      evObj.initEvent(etype, true, false);
+      el.dispatchEvent(evObj);
+  }
   
-  function eventFire(el, etype){
-        if (el.fireEvent) {
-            el.fireEvent('on' + etype);
-        } else {
-            var evObj = document.createEvent('Events');
-            evObj.initEvent(etype, true, false);
-            el.dispatchEvent(evObj);
+  eventFire = (el, etype) =>{
+        if (!el.fireEvent){
+          atach_event(el, etype);
+          return;
         }
+        el.fireEvent('on'+ etype);
     }
   
+  observer_start = () => {
+    observer.observe(targetNode, config);
+  }
+  observer_stop = () => {
+    observer.disconnect();
+  }
 
-      observed_element = document.querySelector('body');
-     
-      observeDOM( observed_element, function(){
+  observer_auto_start = () => {
+    chrome.storage.local.get( null , function (result) {
+      if(result.status === 'off') return;
+      observer.observe(targetNode, config);
+    });
+  }
 
-            chrome.storage.local.get( null , function (result) {
-                if(result.status === 'on'){
-                  if(!!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]){
-                    var adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
-                    if(result.mode === 'normal'){
-                      setTimeout(()=>{
-                        eventFire(adbutton, 'click');
-                      }, 5000); 
-                    }else{
-                      eventFire(adbutton, 'click');
-                    }
-                    
-                  }
-                console.log('on');
-                }else{
-                  console.log('off');
-                }
-              });
-              
-            
-        });
-console.log('funciona aqui');
-    
+  observer_auto_start();
+
+ chrome.runtime.onMessage.addListener(
+    (request) => {
+      if(request.flag === 'START'){
+        observer_start();
+      }
+      if(request.flag === 'STOP'){
+        observer_stop();
+      }
+  });
