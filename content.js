@@ -2,6 +2,7 @@ const targetNode = document.querySelector('#movie_player');
 
 const config = { childList: true, subtree: true };
 const callback = (mutationsList, observer) => {
+
     chrome.storage.local.get(null, function(result) {
         if (result.status === 'off') return;
         if (!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]) return;
