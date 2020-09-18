@@ -13,13 +13,17 @@ power_on = () => {
     set_badge('ON', '#46f193');
     chrome.storage.local.set({ 'status': 'on' });
     send_flag('START');
+
 }
 
 set_mod_normal = () => {
+    set_badge('ON', '#46f193');
     chrome.storage.local.set({ 'mode': 'normal' });
+
 }
 
 set_mod_beast = () => {
+    set_badge('BM', '#6a4cec');
     chrome.storage.local.set({ 'mode': 'beast' });
 }
 
@@ -29,7 +33,12 @@ power_off = () => {
     send_flag('STOP');
 }
 
+close_ = () => {
+    window.close();
+}
+
 document.querySelector('#on').addEventListener('click', power_on);
 document.querySelector('#mod_normal').addEventListener('click', set_mod_normal);
 document.querySelector('#mod_beast').addEventListener('click', set_mod_beast);
 document.querySelector('#off').addEventListener('click', power_off);
+document.querySelector('#close').addEventListener('click', close_);
