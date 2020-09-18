@@ -23,9 +23,9 @@
         "default_popup": "popup.html"
     },
     "icons": {
-        "16": "tab-icon.png",
-        "48": "tab-icon.png",
-        "128": "tab-icon.png"
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
     },
     "permissions": [
         "storage"
