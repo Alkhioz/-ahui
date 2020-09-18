@@ -15,7 +15,7 @@ body {
 .enable {
     background-color: rgb(10, 10, 10);
     color: rgb(255, 255, 255);
-    border-right: 10px rgb(40, 40, 122) solid;
+    border-right: 10px rgb(194, 40, 40) solid;
 }
 
 .disable {
