@@ -1,5 +1,5 @@
-const targetNode = document.querySelector('#movie_player');
-
+//const targetNode = document.querySelector('#movie_player');
+const targetNode = document.querySelector('body');
 const config = { childList: true, subtree: true };
 const callback = (mutationsList, observer) => {
 
@@ -38,20 +38,15 @@ eventFire = (el, etype) => {
 }
 
 observer_start = () => {
+    console.log('..1..');
+    if (!targetNode) return;
     observer.observe(targetNode, config);
+    console.log('..2..');
 }
 observer_stop = () => {
+    if (!targetNode) return;
     observer.disconnect();
 }
-
-observer_auto_start = () => {
-    chrome.storage.local.get(null, function(result) {
-        if (result.status === 'off') return;
-        observer.observe(targetNode, config);
-    });
-}
-
-observer_auto_start();
 
 chrome.runtime.onMessage.addListener(
     (request) => {
@@ -62,3 +57,4 @@ chrome.runtime.onMessage.addListener(
             observer_stop();
         }
     });
+observer_start();

@@ -6,7 +6,7 @@
     "author": "Alejandro Mendoza",
     "content_scripts": [{
         "matches": [
-            "*://*.youtube.com/watch?v=*",
+            "*://*.youtube.com/*",
             "*://*.dev.aledeveloper.com/*"
         ],
         "js": [
