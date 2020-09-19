@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Amsa",
     "description": "Autoskip youtube ads",
-    "version": "1",
+    "version": "0.0.0.1",
     "author": "Alejandro Mendoza",
     "content_scripts": [{
         "matches": [
