@@ -11,10 +11,17 @@
     </header>
     <br>
     <div class="container">
-        <button id='on' class="button enable">On</button>
-        <button id='mod_normal' class="button enable">Normal mode</button>
-        <button id='mod_beast' class="button enable">Beast mode</button>
-        <button id='off' class="button enable">Off</button>
+        
+        <label class="ButtonLabel">SERVICE:</label>
+        <label class="switch">
+            <input type="checkbox" id='on' checked>
+            <span class="slider round"></span>
+        </label>
+        <label class="ButtonLabel">BEAST:</label>
+        <label class="switch">
+            <input type="checkbox" id='beast'>
+            <span class="slider round"></span>
+        </label>
 
         <hr>
         <button id='close' class="closeBtn">&#9650;</button>
