@@ -3,11 +3,10 @@
     "name": "Amsa",
     "description": "Autoskip youtube ads",
     "version": "0.0.0.1",
-    "author": "Alejandro Mendoza",
+    "author": "Lirio Delirante",
     "content_scripts": [{
         "matches": [
-            "*://*.youtube.com/*",
-            "*://*.dev.aledeveloper.com/*"
+            "*://*.youtube.com/*"
         ],
         "js": [
             "content.js"
