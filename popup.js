@@ -69,16 +69,19 @@ document.querySelector('#beast').addEventListener('click', buttonBeastHandler);
 document.addEventListener('DOMContentLoaded', ()=>{
     chrome.storage.local.get(['status', 'mode'],(response)=>{
         let status = response.status;
-        if (status === "off"){
-            let statusButton = document.querySelector('#on');
-            statusButton.checked = false;
-            let beastButton = document.querySelector("#beast");
-            beastButton.disabled = true;
-        }
         let mode = response.mode;
-        if(mode === "beast"){
-            let beastButton = document.querySelector("#beast");
-            beastButton.checked = true;
+        let statusButton = document.querySelector('#on');
+        let beastButton = document.querySelector("#beast");
+        if (status === "off"){
+            statusButton.checked = false;
+            beastButton.disabled = true;
+        }else if (status === "on"){
+            statusButton.checked = true;
+            beastButton.disabled = false;
+            if(mode === "beast"){
+                beastButton.checked = true;
+            }    
         }
+        
     });
 });
