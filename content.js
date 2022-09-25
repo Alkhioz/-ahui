@@ -1,13 +1,11 @@
-//const targetNode = document.querySelector('#movie_player');
-const targetNode = document.querySelector('body');
+const targetNode = document.querySelector('#player-container.style-scope.ytd-watch-flexy');
 const config = { childList: true, subtree: true };
 const callback = (mutationsList, observer) => {
-
     chrome.storage.local.get(null, function(result) {
-        if (result.status === 'off') return;
-        if (!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]) return;
-        let adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0];
-        check_mode(result.mode, adbutton);
+        if (result.status === 'off') return
+        if (!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]) return
+        let adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]
+        check_mode(result.mode, adbutton)
     });
 };
 
@@ -38,10 +36,8 @@ eventFire = (el, etype) => {
 }
 
 observer_start = () => {
-    console.log('..1..');
     if (!targetNode) return;
     observer.observe(targetNode, config);
-    console.log('..2..');
 }
 observer_stop = () => {
     if (!targetNode) return;
