@@ -1,4 +1,4 @@
-const targetNode = document.querySelector('#player-container.style-scope.ytd-watch-flexy');
+const targetNode = document.querySelector('body');
 const config = { childList: true, subtree: true };
 const callback = (mutationsList, observer) => {
     chrome.storage.local.get(null, function(result) {
