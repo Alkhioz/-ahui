@@ -1,11 +1,12 @@
 const targetNode = document.querySelector('body');
 const config = { childList: true, subtree: true };
-const callback = (mutationsList, observer) => {
+const callback = () => {
     chrome.storage.local.get(null, function(result) {
         if (result.status === 'off') return
-        if (!document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]) return
-        let adbutton = document.getElementsByClassName("ytp-ad-skip-button ytp-button")[0]
-        check_mode(result.mode, adbutton)
+        const classSelector = '[class*="ytp"][class*="skip"][class*="ad"][class*="button"]';
+        if (!document.querySelectorAll(classSelector)?.[0]) return
+        const adbutton = document.querySelectorAll(classSelector)?.[0];
+        check_mode(result.mode, adbutton);
     });
 };
 
