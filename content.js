@@ -1,57 +1,39 @@
 const targetNode = document.querySelector('body');
 const config = { childList: true, subtree: true };
-const callback = () => {
-    chrome.storage.local.get(null, function(result) {
-        if (result.status === 'off') return
+
+const observer = new MutationObserver(() => {
+    chrome.storage.local.get('status', (result) => {
+        if(result.status === 'off') return false;
         const classSelector = '[class*="ytp"][class*="skip"][class*="ad"][class*="button"]';
-        if (!document.querySelectorAll(classSelector)?.[0]) return
-        const adbutton = document.querySelectorAll(classSelector)?.[0];
-        check_mode(result.mode, adbutton);
+        const adButton = document.querySelector(classSelector);
+        if (!adButton) return false;
+        chrome.storage.local.get('mode', (result) => check_mode(result.mode, adButton));
     });
-};
+});
 
-const observer = new MutationObserver(callback);
-
-check_mode = (mode, object) => {
-    if (mode === 'normal') {
-        setTimeout(() => {
-            eventFire(object, 'click');
-        }, 5000);
-        return 0;
+function check_mode(mode, object) {
+    if (mode !== 'normal') {
+        eventFire(object, 'click');
+        return false;
     }
-    eventFire(object, 'click');
+    const MIN_DELAY = 5000;
+    const MAX_DELAY = 6000;
+    const delay = Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY + 1) + MIN_DELAY);
+    setTimeout(() => eventFire(object, 'click'), delay);
 }
 
-atach_event = (el, etype) => {
-    let evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
+function eventFire(el, etype) {
+    if (!el?.dispatchEvent) return false;
+    let evObj = new Event(etype, { bubbles: true, cancelable: false });
     el.dispatchEvent(evObj);
 }
 
-eventFire = (el, etype) => {
-    if (!el.fireEvent) {
-        atach_event(el, etype);
-        return;
-    }
-    el.fireEvent('on' + etype);
-}
+const observer_start = () => observer.observe(targetNode, config);
+const observer_stop = () => observer.disconnect();
 
-observer_start = () => {
-    if (!targetNode) return;
-    observer.observe(targetNode, config);
-}
-observer_stop = () => {
-    if (!targetNode) return;
-    observer.disconnect();
-}
+chrome.runtime.onMessage.addListener((request) => {
+    if (request.flag === 'START') observer_start();
+    else if (request.flag === 'STOP') observer_stop();
+});
 
-chrome.runtime.onMessage.addListener(
-    (request) => {
-        if (request.flag === 'START') {
-            observer_start();
-        }
-        if (request.flag === 'STOP') {
-            observer_stop();
-        }
-    });
 observer_start();
