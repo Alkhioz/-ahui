@@ -1,35 +1,35 @@
 send_flag = (flag) => {
-    chrome.tabs.query({}, function(tabs) {
-        tabs.forEach(element => chrome.tabs.sendMessage(element.id, { flag: flag }));
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, { flag: flag });
     });
 }
 
 set_badge = (text, color) => {
-    chrome.browserAction.setBadgeText({ text: text });
-    chrome.browserAction.setBadgeBackgroundColor({ color: color });
+    chrome.action.setBadgeText({ text: text });
+    chrome.action.setBadgeBackgroundColor({ color: color });
 }
 
 buttonServiceHandler = () => {
-    chrome.storage.local.get('status',(response)=>{
-        let status = response.status;
-        if(status === "on"){
+    chrome.storage.local.get(["status"]).then((result) => {
+        let status = result.status;
+        if (status === "on") {
             power_off();
-        }else if(status === "off"){
+        } else if (status === "off") {
             power_on();
             set_mod_normal();
         }
-    });
+    })
 }
 
 buttonBeastHandler = () => {
-    chrome.storage.local.get('mode',(response)=>{
-        let status = response.mode;
-        if(status === "normal"){
+    chrome.storage.local.get(["mode"]).then((result) => {
+        let mode = result.mode;
+        if (mode === "normal") {
             set_mod_beast();
-        }else if(status === "beast"){
+        } else if (mode === "beast") {
             set_mod_normal();
         }
-    });
+    })
 }
 
 power_on = () => {
@@ -66,22 +66,21 @@ close_ = () => {
 document.querySelector('#close').addEventListener('click', close_);
 document.querySelector('#on').addEventListener('click', buttonServiceHandler);
 document.querySelector('#beast').addEventListener('click', buttonBeastHandler);
-document.addEventListener('DOMContentLoaded', ()=>{
-    chrome.storage.local.get(['status', 'mode'],(response)=>{
-        let status = response.status;
-        let mode = response.mode;
+document.addEventListener('DOMContentLoaded', () => {
+    chrome.storage.local.get(['status', 'mode']).then((result) => {
+        let status = result.status;
+        let mode = result.mode;
         let statusButton = document.querySelector('#on');
         let beastButton = document.querySelector("#beast");
-        if (status === "off"){
+        if (status === "off") {
             statusButton.checked = false;
             beastButton.disabled = true;
-        }else if (status === "on"){
+        } else if (status === "on") {
             statusButton.checked = true;
             beastButton.disabled = false;
-            if(mode === "beast"){
+            if (mode === "beast") {
                 beastButton.checked = true;
-            }    
+            }
         }
-        
-    });
+    })
 });
